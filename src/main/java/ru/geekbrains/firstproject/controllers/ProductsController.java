@@ -34,11 +34,11 @@ public class ProductsController {
     }
 
     @GetMapping("/filter")
-    public List<Product> getFilterProductByCost(@RequestParam(defaultValue = "0.0") double min, @RequestParam(defaultValue = "0.0") double max) {
-        if (min > 0 && max == 0) {
+    public List<Product> getFilterProductByCost(@RequestParam(defaultValue = "-1") double min, @RequestParam(defaultValue = "-1") double max) {
+        if (min > 0 && max == -1) {
             return this.productsRepository.findByCostAfter(min);
         }
-        if (min == 0 && max > 0) {
+        if (min == -1 && max > 0) {
             return this.productsRepository.findByCostBefore(max);
         }
         return this.productsRepository.findByCostBetween(min, max);
