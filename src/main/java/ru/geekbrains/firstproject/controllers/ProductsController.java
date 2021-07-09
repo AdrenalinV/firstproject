@@ -33,7 +33,7 @@ public class ProductsController {
         return productsRepository.save(product);
     }
 
-    @GetMapping("/filter")
+    @GetMapping("/filter_cost")
     public List<Product> getFilterProductByCost(@RequestParam(defaultValue = "-1") double min, @RequestParam(defaultValue = "-1") double max) {
         if (min > 0 && max == -1) {
             return this.productsRepository.findByCostAfter(min);
@@ -42,6 +42,10 @@ public class ProductsController {
             return this.productsRepository.findByCostBefore(max);
         }
         return this.productsRepository.findByCostBetween(min, max);
+    }
+    @GetMapping("/filter_title")
+    public List<Product> getFilterProductByTitle(@RequestParam String title){
+        return this.productsRepository.findByTitleIgnoreCaseLike("%"+title+"%");
     }
 
 

@@ -12,5 +12,6 @@ public interface ProductsRepository extends JpaRepository<Product, Long> {
     public List<Product> findByCostAfter(double min);
     public List<Product> findByCostBefore(double max);
     public List<Product> findByCostBetween(double min, double max);
+    public List<Product> findByTitleIgnoreCaseLike(String title);
 
 }
