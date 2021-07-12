@@ -3,7 +3,7 @@ package ru.geekbrains.firstproject.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.firstproject.entities.Product;
-import ru.geekbrains.firstproject.repositories.ProductsRepository;
+import ru.geekbrains.firstproject.services.ProductService;
 
 import java.util.List;
 
@@ -11,41 +11,36 @@ import java.util.List;
 @RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductsController {
-    private final ProductsRepository productsRepository;
-
-    @GetMapping
-    public List<Product> getAllProduct() {
-        return (List<Product>) productsRepository.findAll();
-    }
+    private final ProductService productService;
 
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id) {
-        return productsRepository.findById(id).get();
+        return this.productService.findProductById(id).get();
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable Long id) {
-        productsRepository.deleteById(id);
+        this.productService.deleteProductById(id);
     }
 
     @PostMapping
     public Product addProduct(@RequestBody Product product) {
-        return productsRepository.save(product);
+        return this.productService.addProduct(product);
     }
 
-    @GetMapping("/filter_cost")
-    public List<Product> getFilterProductByCost(@RequestParam(defaultValue = "-1") double min, @RequestParam(defaultValue = "-1") double max) {
-        if (min > 0 && max == -1) {
-            return this.productsRepository.findByCostAfter(min);
+    @GetMapping
+    public List<Product> getFilterProductByCost(
+            @RequestParam(name="min_cost",defaultValue = "0") Double min,
+            @RequestParam(name="max_cost", required = false) Double max
+    ) {
+        if(max==null){
+            max=Double.MAX_VALUE;
         }
-        if (min == -1 && max > 0) {
-            return this.productsRepository.findByCostBefore(max);
-        }
-        return this.productsRepository.findByCostBetween(min, max);
+        return this.productService.findProductByCost(min,max);
     }
     @GetMapping("/filter_title")
     public List<Product> getFilterProductByTitle(@RequestParam String title){
-        return this.productsRepository.findByTitleIgnoreCaseLike("%"+title+"%");
+        return this.productService.findProductByTitleLike(title);
     }
 
 
