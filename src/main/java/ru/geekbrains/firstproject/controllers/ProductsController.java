@@ -1,21 +1,25 @@
 package ru.geekbrains.firstproject.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.firstproject.entities.Product;
+import ru.geekbrains.firstproject.exceptions.ResourceNotFoundException;
+import ru.geekbrains.firstproject.model.dtos.ProductDto;
+import ru.geekbrains.firstproject.model.entities.Product;
+import ru.geekbrains.firstproject.repositories.specifications.ProductSpecification;
 import ru.geekbrains.firstproject.services.ProductService;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class ProductsController {
     private final ProductService productService;
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
-        return this.productService.findProductById(id).get();
+    public ProductDto getProductById(@PathVariable Long id) {
+        return this.productService.findProductById(id).orElseThrow(()->new ResourceNotFoundException("Product with id:" + id + " doesn't exist"));
     }
 
     @DeleteMapping("/{id}")
@@ -24,24 +28,24 @@ public class ProductsController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Product addProduct(@RequestBody Product product) {
-        return this.productService.addProduct(product);
+        return this.productService.addOrUpdateProduct(product);
+    }
+
+    @PutMapping
+    public Product UpdateProduct(@RequestBody Product product) {
+        return this.productService.addOrUpdateProduct(product);
     }
 
     @GetMapping
-    public List<Product> getFilterProductByCost(
-            @RequestParam(name="min_cost",defaultValue = "0") Double min,
-            @RequestParam(name="max_cost", required = false) Double max
-    ) {
-        if(max==null){
-            max=Double.MAX_VALUE;
+    public Page<ProductDto> getAllProducts(
+            @RequestParam MultiValueMap<String, String> params,
+            @RequestParam(name="p", defaultValue = "1") Integer page
+            ){
+        if(page<1){
+            page=1;
         }
-        return this.productService.findProductByCost(min,max);
+        return this.productService.findProductAll(ProductSpecification.build(params),page,2);
     }
-    @GetMapping("/filter_title")
-    public List<Product> getFilterProductByTitle(@RequestParam String title){
-        return this.productService.findProductByTitleLike(title);
-    }
-
-
 }
