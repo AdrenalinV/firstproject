@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
@@ -18,5 +19,9 @@ public class Product {
     private String title;
     @Column(name = "cost")
     private double cost;
+    @Column(name="created_at")
+    private LocalDateTime created_at;
+    @Column(name="updated_at")
+    private LocalDateTime updated_at;
 
 }

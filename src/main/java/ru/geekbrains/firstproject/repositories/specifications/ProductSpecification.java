@@ -14,7 +14,8 @@ public class ProductSpecification {
     }
 
     private static Specification<Product> titleLike(String titlePart){
-        return ((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("title"),String.format("%%s%%", titlePart)));
+
+        return ((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("title"),String.format("%%%s%%", titlePart)));
     }
 
     public static Specification<Product> build(MultiValueMap<String,String> params) {

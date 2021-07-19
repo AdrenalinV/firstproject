@@ -9,4 +9,5 @@ import ru.geekbrains.firstproject.model.entities.Product;
 public interface ProductsRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 
 
+
 }
