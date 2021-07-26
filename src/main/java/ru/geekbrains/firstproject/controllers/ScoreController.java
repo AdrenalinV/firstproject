@@ -36,12 +36,14 @@ public class ScoreController {
     public String getScore(Principal principal) {
         User user = userService.findUserByUsername(principal.getName()).orElseThrow(() -> new RuntimeException("unable to fing user by username: " + principal.getName()));
         return String.format("User: %s \t score: %d", user.getUserName(), user.getScore());
+//            return user;
     }
 
     @GetMapping("/get/{id}")
     public String getScore(@PathVariable Long id) {
         User user = userService.findUserById(id);
         return String.format("User: %s \t score: %d", user.getUserName(), user.getScore());
+//      return user;
     }
 
 }
