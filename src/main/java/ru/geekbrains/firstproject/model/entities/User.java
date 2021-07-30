@@ -1,16 +1,24 @@
 package ru.geekbrains.firstproject.model.entities;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
 @Table(name = "users")
 @Data
-@NoArgsConstructor
 public class User {
+
+    public User(){
+        this.roles=new ArrayList<Role>();
+        this.score=0;
+    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +34,7 @@ public class User {
     @Column(name = "score")
     private Integer score;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

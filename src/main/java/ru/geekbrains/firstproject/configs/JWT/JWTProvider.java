@@ -28,7 +28,7 @@ public class JWTProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(JWTSecret).parseClaimsJwt(token);
+            Jwts.parser().setSigningKey(JWTSecret).parseClaimsJws(token);
             return true;
         } catch (Exception e) {
             log.severe("invalid token");
@@ -37,7 +37,7 @@ public class JWTProvider {
     }
 
     public String getLoginFromToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(JWTSecret).parseClaimsJwt(token).getBody();
+        Claims claims = Jwts.parser().setSigningKey(JWTSecret).parseClaimsJws(token).getBody();
         return claims.getSubject();
     }
 

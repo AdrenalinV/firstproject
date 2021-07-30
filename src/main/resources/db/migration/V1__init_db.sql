@@ -40,14 +40,3 @@ INSERT INTO roles (name)
 VALUES
 ('ROLE_USER'), ('ROLE_ADMIN');
 
-INSERT INTO users (username, password, score)
-VALUES
-('user', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 99),
-('user_1', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 50),
-('user_2', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 10),
-('user_3', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 75);
-
-INSERT INTO users_roles (user_id, role_id)
-VALUES
-(1, 1),
-(1, 2);
