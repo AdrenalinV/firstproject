@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS order_items;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS users_roles;
@@ -15,7 +16,13 @@ INSERT INTO products (title, cost) VALUES
 ('Product_4',125.36),
 ('Product_5',256.52);
 
-
+CREATE TABLE order_items(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    title VARCHAR(255),
+    quantity INTEGER,
+    price_per_product FLOAT,
+    price FLOAT
+    );
 CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
     username VARCHAR(30),

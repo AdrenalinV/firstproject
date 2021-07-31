@@ -19,7 +19,8 @@ public class ProductsController {
 
     @GetMapping("/{id}")
     public ProductDto getProductById(@PathVariable Long id) {
-        return this.productService.findProductById(id).orElseThrow(()->new ResourceNotFoundException("Product with id:" + id + " doesn't exist"));
+        ProductDto p = new ProductDto(this.productService.findProductById(id).orElseThrow(() -> new ResourceNotFoundException("Product with id:" + id + " doesn't exist")));
+        return p;
     }
 
     @DeleteMapping("/{id}")
@@ -41,11 +42,11 @@ public class ProductsController {
     @GetMapping
     public Page<ProductDto> getAllProducts(
             @RequestParam MultiValueMap<String, String> params,
-            @RequestParam(name="p", defaultValue = "1") Integer page
-            ){
-        if(page<1){
-            page=1;
+            @RequestParam(name = "p", defaultValue = "1") Integer page
+    ) {
+        if (page < 1) {
+            page = 1;
         }
-        return this.productService.findProductAll(ProductSpecification.build(params),page,2);
+        return this.productService.findProductAll(ProductSpecification.build(params), page, 2);
     }
 }

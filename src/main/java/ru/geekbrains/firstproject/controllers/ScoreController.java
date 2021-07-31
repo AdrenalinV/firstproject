@@ -12,10 +12,11 @@ import ru.geekbrains.firstproject.services.UserService;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/score")
+@RequestMapping("/api/v1/score")
 @RequiredArgsConstructor
 public class ScoreController {
     private final UserService userService;
+
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/inc")
     public void incScore(Principal principal) throws RuntimeException {
@@ -23,6 +24,7 @@ public class ScoreController {
         user.setScore(user.getScore() + 1);
         userService.updateUser(user);
     }
+
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/dec")
     public void decScore(Principal principal) {
@@ -32,6 +34,7 @@ public class ScoreController {
             userService.updateUser(user);
         }
     }
+
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/get/current")
     public String getScore(Principal principal) {

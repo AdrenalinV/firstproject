@@ -17,15 +17,15 @@ import java.util.Optional;
 public class ProductService {
     private final ProductsRepository productsRepository;
 
-    public Optional<ProductDto> findProductById(Long id) {
-        return this.productsRepository.findById(id).map(ProductDto::new);
+    public Optional<Product> findProductById(Long id) {
+        return this.productsRepository.findById(id);
     }
 
     public Page<ProductDto> findProductAll(Specification<Product> spec, int page, int pageSize) {
-        if (page<0){
+        if (page < 0) {
             throw new RuntimeException();
         }
-        return  this.productsRepository.findAll(spec,PageRequest.of(page-1,pageSize)).map(ProductDto::new);
+        return this.productsRepository.findAll(spec, PageRequest.of(page - 1, pageSize)).map(ProductDto::new);
 
     }
 

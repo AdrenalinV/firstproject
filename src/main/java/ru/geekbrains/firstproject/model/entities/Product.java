@@ -2,6 +2,8 @@ package ru.geekbrains.firstproject.model.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,9 +21,11 @@ public class Product {
     private String title;
     @Column(name = "cost")
     private double cost;
-    @Column(name="created_at")
+    @Column(name = "created_at")
+    @CreationTimestamp
     private LocalDateTime created_at;
-    @Column(name="updated_at")
+    @Column(name = "updated_at")
+    @UpdateTimestamp
     private LocalDateTime updated_at;
 
 }

@@ -1,7 +1,6 @@
 package ru.geekbrains.firstproject.services;
 
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,11 +15,8 @@ import ru.geekbrains.firstproject.repositories.RoleRepository;
 import ru.geekbrains.firstproject.repositories.UserRepository;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,8 +48,9 @@ public class UserService implements UserDetailsService {
     public Optional<User> findUserByUsername(String s) {
         return userRepository.findByUserName(s);
     }
-    public User saveUser(User user){
-        Role role=roleRepository.findByName("ROLE_USER");
+
+    public User saveUser(User user) {
+        Role role = roleRepository.findByName("ROLE_USER");
         user.getRoles().add(role);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);

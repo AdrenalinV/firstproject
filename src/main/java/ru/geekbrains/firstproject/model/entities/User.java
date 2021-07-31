@@ -1,9 +1,7 @@
 package ru.geekbrains.firstproject.model.entities;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,9 +12,9 @@ import java.util.Collection;
 @Data
 public class User {
 
-    public User(){
-        this.roles=new ArrayList<Role>();
-        this.score=0;
+    public User() {
+        this.roles = new ArrayList<Role>();
+        this.score = 0;
     }
 
 
@@ -28,7 +26,7 @@ public class User {
     @Column(name = "username")
     private String userName;
 
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
 
     @Column(name = "score")
