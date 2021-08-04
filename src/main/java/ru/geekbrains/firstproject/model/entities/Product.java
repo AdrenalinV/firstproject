@@ -28,4 +28,5 @@ public class Product {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
+
 }

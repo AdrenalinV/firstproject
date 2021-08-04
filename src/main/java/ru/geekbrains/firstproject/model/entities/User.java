@@ -4,6 +4,7 @@ import lombok.Data;
 
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -14,7 +15,6 @@ public class User {
 
     public User() {
         this.roles = new ArrayList<Role>();
-        this.score = 0;
     }
 
 
@@ -29,8 +29,11 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "score")
-    private Integer score;
+    @Column(name = "delete_at")
+    private LocalDateTime delete_at;
+
+    @OneToOne(mappedBy = "owner", optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private UserDetail userDetail;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
