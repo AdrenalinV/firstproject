@@ -2,8 +2,10 @@ package ru.geekbrains.firstproject.model.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -27,6 +29,10 @@ public class OrderItem {
 
     @Column(name = "price")
     private double price;
+
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private LocalDateTime updated_at;
 
     public OrderItem (Product product){
         this.product=product;
